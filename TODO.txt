@@ -1,5 +1,12 @@
 
 - decide what we want to store and how
+
 - database and schema
+
 - scrape scripts for news APIs
+    - write simple scripts for scrape logging to file
+
 - crons for script execution
+    - write cron.bash for cron script batching
+    - perhaps this needs to go into a bash deploy file for setting the cron?
+
