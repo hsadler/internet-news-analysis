@@ -1,0 +1,5 @@
+
+- decide what we want to store and how
+- database and schema
+- scrape scripts for news APIs
+- crons for script execution
