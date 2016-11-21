@@ -1,4 +1,5 @@
 
-# Game of Life
+# Analysis of internet news headline trends
 
-> Conway's Game of Life
+> Will use cron jobs, python scripts, and mysql
+> Work in progress..
