@@ -1,5 +1,10 @@
 
 - decide what we want to store and how
+    ::Each Headline::
+        - give timestamp
+        - split into individual words
+        - remove undesired words
+        - format as dictionary word count
 
 - database and schema
 
