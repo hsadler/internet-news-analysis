@@ -1,6 +1,7 @@
 
 import requests
 import pprint
+import time
 
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -24,7 +25,21 @@ for sources_item in sources_data:
 
 
 for s_id in source_ids:
-    print('making source id api calls...')
+
+    time.sleep(5)
+
+    get_url = '{0}?source={1}&apiKey={2}'.format(
+        news_api['get_articles_url'],
+        s_id,
+        news_api['api_key']
+    )
+
+    articles_res = requests.get(get_url)
+    articles_data = articles_res.json()
+
+    print('================================================')
+
+    pp.pprint(articles_data)
 
 
 
