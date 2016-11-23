@@ -15,3 +15,8 @@
     - write cron.bash for cron script batching
     - perhaps this needs to go into a bash deploy file for setting the cron?
 
+
+notes about scraping/programmatic web requests:
+    - throttle rate of requests
+    - rotate IPs (look into VPNs, shared proxies and TOR)
+    - user-agent string spoofing
