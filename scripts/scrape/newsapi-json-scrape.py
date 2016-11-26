@@ -43,14 +43,18 @@ for s_id in source_ids:
         news_api['api_key']
     )
 
-    article_headers = {
+    articles_headers = {
         'User-Agent': rand_user_agent()
     }
 
-    articles_res = requests.get(get_url, headers=article_headers)
+    articles_res = requests.get(get_url, headers=articles_headers)
     articles_data = articles_res.json()
 
-    pp.pprint(articles_data)
+    for article in articles_data[u'articles']:
+        title = article[u'title']
+        print len(title)
+
+    # pp.pprint(article_data)
 
 
 
