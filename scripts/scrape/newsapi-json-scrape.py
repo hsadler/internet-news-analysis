@@ -3,6 +3,8 @@ import requests
 import pprint
 import time
 
+from user_agent import get_rand_user_agent as rand_user_agent
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -13,7 +15,11 @@ news_api = {
     'api_key': '9110ce6d759d455392a0d83606bf59db'
 }
 
-sources_res = requests.get(news_api['get_sources_url'])
+sources_headers = {
+    'User-Agent': rand_user_agent()
+}
+print sources_headers
+sources_res = requests.get(news_api['get_sources_url'], headers=sources_headers)
 sources_data = sources_res.json()['sources']
 
 
