@@ -15,10 +15,11 @@ news_api = {
     'api_key': '9110ce6d759d455392a0d83606bf59db'
 }
 
+
 sources_headers = {
     'User-Agent': rand_user_agent()
 }
-print sources_headers
+
 sources_res = requests.get(news_api['get_sources_url'], headers=sources_headers)
 sources_data = sources_res.json()['sources']
 
@@ -32,6 +33,8 @@ for sources_item in sources_data:
 
 for s_id in source_ids:
 
+    print('================================================')
+
     time.sleep(5)
 
     get_url = '{0}?source={1}&apiKey={2}'.format(
@@ -40,10 +43,12 @@ for s_id in source_ids:
         news_api['api_key']
     )
 
-    articles_res = requests.get(get_url)
-    articles_data = articles_res.json()
+    article_headers = {
+        'User-Agent': rand_user_agent()
+    }
 
-    print('================================================')
+    articles_res = requests.get(get_url, headers=article_headers)
+    articles_data = articles_res.json()
 
     pp.pprint(articles_data)
 
