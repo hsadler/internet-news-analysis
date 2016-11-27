@@ -20,4 +20,13 @@ tree = ElementTree.fromstring(res.content)
 
 items = tree.find('channel').findall('item')
 
-pp.pprint(items)
+for item in items:
+	# url, title, publish time, (description, maybe)
+	article = {}
+	article['url'] = item.find('link').text
+	article['title'] = item.find('title').text
+	article['publish_time'] = item.find('pubDate').text
+
+	for prop in article:
+		print '{0}: {1}'.format(prop, article[prop])
+
