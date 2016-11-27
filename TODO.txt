@@ -1,5 +1,9 @@
 
 - decide what we want to store and how
+    ::Each News Item::
+        - available props: url, author, title, description, publish time
+        - shared props: url, title, publish time, (description, maybe)
+
     ::Each Headline::
         - give timestamp
         - split into individual words
