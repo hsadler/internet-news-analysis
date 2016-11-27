@@ -1,4 +1,10 @@
 
+
+TODO:
+    - find a way to only process news_items if they've yet to be stored (hash article titles)
+    - convert store_news.py to article_model.py with model and methods
+
+
 - decide what we want to store and how
     ::Each News Item::
         - available props: url, author, title, description, publish time
@@ -26,5 +32,4 @@ notes about scraping/programmatic web requests:
     - user-agent string spoofing
 
 
-BUGS:
-    - find a way to only process news_items if they've yet to be stored (hash article titles)
+

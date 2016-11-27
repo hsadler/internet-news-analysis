@@ -5,7 +5,7 @@ import time
 
 from xml.etree import ElementTree
 from user_agent import get_rand_user_agent as rand_user_agent
-from store_news import store_news_item
+from article_model import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -26,15 +26,13 @@ items = tree.find('channel').findall('item')
 
 for item in items:
 
-    article = {}
-    article['url'] = item.find('link').text
-    article['title'] = item.find('title').text
-    article['publish_time'] = item.find('pubDate').text
+    url = item.find('link').text
+    title = item.find('title').text
+    pub_time = item.find('pubDate').text
 
-    store_news_item(
-        url=article['url'],
-        title=article['title'],
-        scrape_ts=int(time.time())
-    )
+    article = Article()
+    article.create(url=url, title=title)
+    article.save()
+    article.print_dict()
 
 

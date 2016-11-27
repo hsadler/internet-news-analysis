@@ -7,6 +7,8 @@ cur = con.cursor()
 
 with con:
 
+    cur.execute('DROP TABLE news_items;')
+
     # create news_items table
     cur.execute("""CREATE TABLE IF NOT EXISTS news_items(
         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -15,6 +17,7 @@ with con:
         title VARCHAR(255) NOT NULL,
         description VARCHAR(255),
         scrape_ts INT(12) NOT NULL,
-        publish_ts INT(12)
+        publish_ts INT(12),
+        md5hash VARCHAR(32)
     );""")
 
