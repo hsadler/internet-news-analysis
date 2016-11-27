@@ -24,3 +24,7 @@ notes about scraping/programmatic web requests:
     - throttle rate of requests
     - rotate IPs (look into VPNs, shared proxies and TOR)
     - user-agent string spoofing
+
+
+BUGS:
+    - find a way to only process news_items if they've yet to be stored (hash article titles)
