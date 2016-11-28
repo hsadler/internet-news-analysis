@@ -23,9 +23,10 @@ class Article():
 
 
     def create(self, title, url=None, author=None, description=None, publish_ts=None):
+
         if title is None:
             raise TypeError('Article must have a title.')
-            return None
+            return False
 
         self.title = title
         self.url = url
@@ -33,13 +34,20 @@ class Article():
         self.description = description
         self.publish_ts = publish_ts
 
-        self.scrape_ts = time.time()
-        self.md5hash = hashlib.md5(title).hexdigest()
+        self.scrape_ts = int(time.time())
+        self.md5hash = hashlib.md5(title.encode('ascii', 'ignore')).hexdigest()
+
+        return True
 
 
     def save(self):
 
-        con = mdb.connect('localhost', 'root', '', 'internet_news_analysis')
+        article_exists_in_db = self.get_by_md5hash(self.md5hash)
+        if article_exists_in_db:
+            print 'article already exists in database with title: {0}'.format(self.title)
+            return False
+
+        con = mdb.connect(host='localhost', user='root', passwd='', db='internet_news_analysis')
         cur = con.cursor()
 
         with con:
@@ -59,9 +67,28 @@ class Article():
 
             cur.execute(query, data)
 
+        return True
 
-    def get_by_md5hash(self):
-        print 'getting article by md5hash...'
+
+    def get_by_md5hash(self, md5hash):
+
+        con = mdb.connect(host='localhost', user='root', passwd='', db='internet_news_analysis')
+        cur = con.cursor(mdb.cursors.DictCursor)
+
+        with con:
+            cur.execute("SELECT * FROM news_items WHERE md5hash = '{0}'".format(md5hash))
+            record = cur.fetchone()
+
+        if record is not None:
+            self.title = record['title']
+            self.url = record['url']
+            self.author = record['author']
+            self.description = record['description']
+            self.publish_ts = record['publish_ts']
+            self.scrape_ts = record['scrape_ts']
+            self.md5hash = record['md5hash']
+
+        return record is not None
 
 
     def print_dict(self):
