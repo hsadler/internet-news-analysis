@@ -32,8 +32,9 @@ for item in items:
 
     article = Article()
     article.create(url=url, title=title)
-    # article.print_dict()
     article.save()
+
+    # article.print_dict()
 
 
 

@@ -1,8 +1,11 @@
 
 
 TODO:
-    - find a way to only process news_items if they've yet to be stored (hash article titles)
-    - convert store_news.py to article_model.py with model and methods
+    X find a way to only process news_items if they've yet to be stored (hash article titles)
+    X convert store_news.py to article_model.py with model and methods
+    - put on cron
+    - add parsing of article pub dates to timestamps
+    - add processing of headlines (chop up, store keywords)
 
 
 - decide what we want to store and how
