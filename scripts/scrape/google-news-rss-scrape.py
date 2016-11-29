@@ -2,6 +2,7 @@
 import requests
 import pprint
 import time
+import logging
 
 from xml.etree import ElementTree
 from user_agent import get_rand_user_agent as rand_user_agent
@@ -9,6 +10,10 @@ from article_model import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
+logging.basicConfig(filename='log-google-scrape.log',level=logging.INFO)
+
+
+logging.info('scrape started: {0}'.format(time.ctime()))
 
 
 scrape_url = 'https://news.google.com/news?output=rss'
@@ -34,7 +39,9 @@ for item in items:
     article.create(url=url, title=title)
     article.save()
 
-    # article.print_dict()
+
+logging.info('scrape ended: {0}\n'.format(time.ctime()))
+
 
 
 

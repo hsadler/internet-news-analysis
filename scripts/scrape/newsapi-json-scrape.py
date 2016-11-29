@@ -2,12 +2,17 @@
 import requests
 import pprint
 import time
+import logging
 
 from user_agent import get_rand_user_agent as rand_user_agent
 from article_model import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
+logging.basicConfig(filename='log-newsapi-scrape.log',level=logging.INFO)
+
+
+logging.info('scrape started: {0}'.format(time.ctime()))
 
 
 news_api = {
@@ -49,18 +54,6 @@ for s_id in source_ids:
     articles_res = requests.get(get_url, headers=articles_headers)
     articles_data = articles_res.json()
 
-    # u'author': u'http://www.abc.net.au/news/zoe-daniel/166858',
-    # u'description': u"Conservative senator Cory Bernardi warns the Liberal Party not to ignore the lessons of Donald Trump's victory in the US presidential election.",
-    # u'publishedAt': u'2016-11-28T05:15:45Z',
-    # u'title': u'Bernardi warns Liberals must learn lessons from Trump victory',
-    # u'url': u'http://www.abc.net.au/news/2016-11-28/bernardi-warns-liberals-must-learn-lessons-trump-victory/8062738',
-    # u'urlToImage': u'http://www.abc.net.au/news/image/7403226-1x1-700x700.jpg'
-    #
-    # self.title = title
-    # self.url = url
-    # self.author = author
-    # self.description = description
-    # self.publish_ts = publish_ts
 
     for article_dict in articles_data[u'articles']:
 
@@ -73,8 +66,8 @@ for s_id in source_ids:
         )
         article.save()
 
-        # pp.pprint(article_dict)
 
+logging.info('scrape ended: {0}\n'.format(time.ctime()))
 
 
 

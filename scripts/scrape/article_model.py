@@ -44,7 +44,6 @@ class Article():
 
         article_exists_in_db = self.get_by_md5hash(self.md5hash)
         if article_exists_in_db:
-            print 'article already exists in database with title: {0}'.format(self.title.encode('ascii', 'ignore'))
             return False
 
         con = mdb.connect(host='localhost', user='root', passwd='', db='internet_news_analysis')
@@ -67,7 +66,6 @@ class Article():
 
             cur.execute(query, data)
 
-        print 'article save success: {0}'.format(self.title.encode('ascii', 'ignore'))
         return True
 
 
