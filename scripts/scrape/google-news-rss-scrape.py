@@ -11,10 +11,10 @@ from article_model import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
-logging.basicConfig(filename='log-google-scrape.log',level=logging.INFO)
+logging.basicConfig(filename='scrape.log', level=logging.INFO)
 
 
-logging.info('scrape started: {0}'.format(time.ctime()))
+logging.info('google rss scrape started: {0}'.format(time.ctime()))
 
 
 scrape_url = 'https://news.google.com/news?output=rss'
@@ -41,7 +41,7 @@ for item in items:
     article.save()
 
 
-logging.info('scrape ended: {0}\n'.format(time.ctime()))
+logging.info('google rss scrape ended: {0}\n'.format(time.ctime()))
 
 
 

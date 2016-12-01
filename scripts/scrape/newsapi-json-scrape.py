@@ -10,10 +10,10 @@ from article_model import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
-logging.basicConfig(filename='log-newsapi-scrape.log',level=logging.INFO)
+logging.basicConfig(filename='scrape.log', level=logging.INFO)
 
 
-logging.info('scrape started: {0}'.format(time.ctime()))
+logging.info('newsapi scrape started: {0}'.format(time.ctime()))
 
 
 news_api = {
@@ -68,7 +68,7 @@ for s_id in source_ids:
         article.save()
 
 
-logging.info('scrape ended: {0}\n'.format(time.ctime()))
+logging.info('newsapi scrape ended: {0}\n'.format(time.ctime()))
 
 
 
