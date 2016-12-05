@@ -1,0 +1,5 @@
+
+
+run scrape shell script every hour:
+
+0 * * * * cd git/internet-news-analysis/ && sh scrape-cron.sh
