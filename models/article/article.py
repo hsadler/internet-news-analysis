@@ -52,7 +52,7 @@ class Article():
 
         with con:
 
-            query = """INSERT INTO news_items(title, url, author, description,
+            query = """INSERT INTO articles(title, url, author, description,
             publish_ts, scrape_ts, md5hash) VALUES(%s, %s, %s, %s, %s, %s, %s);"""
 
             data = (
@@ -76,7 +76,7 @@ class Article():
         cur = con.cursor(mdb.cursors.DictCursor)
 
         with con:
-            cur.execute("SELECT * FROM news_items WHERE md5hash = '{0}'".format(md5hash))
+            cur.execute("SELECT * FROM articles WHERE md5hash = '{0}'".format(md5hash))
             record = cur.fetchone()
 
         if record is not None:

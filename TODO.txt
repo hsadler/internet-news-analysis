@@ -1,12 +1,14 @@
 
 
 TODO:
-    X find a way to only process news_items if they've yet to be stored (hash article titles)
+    X find a way to only process articles if they've yet to be stored (hash article titles)
     X convert store_news.py to article_model.py with model and methods
-    - add logging to file upon scrape start and end
+    X add logging to file upon scrape start and end
     - put on cron
     - add parsing of article pub dates to timestamps
     - add processing of headlines (chop up, store keywords)
+    - compose schema and add table for keywords
+    - refactor article hashes to concat publish date and title
 
 
 - decide what we want to store and how
@@ -21,6 +23,11 @@ TODO:
         - format as dictionary word count
 
 - database and schema
+    article table schema:
+        - id, url, author, title, description, scrape_ts, publish_ts, md5hash
+    headline_keyword schema:
+        - id, keyword (not unique), article_id, scrape_ts
+
 
 - scrape scripts for news APIs
     - write simple scripts for scrape logging to file
