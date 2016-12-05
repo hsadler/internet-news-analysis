@@ -7,8 +7,8 @@ cur = con.cursor()
 
 with con:
 
-    cur.execute('DROP TABLE articles;')
-    cur.execute('DROP TABLE headline_keywords;')
+    # cur.execute('DROP TABLE articles;')
+    # cur.execute('DROP TABLE headline_keywords;')
 
     # create articles table
     cur.execute("""

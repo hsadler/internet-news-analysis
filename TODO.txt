@@ -8,7 +8,7 @@ TODO:
     - add parsing of article pub dates to timestamps
     - add processing of headlines (chop up, store keywords)
     - compose schema and add table for keywords
-    - refactor article hashes to concat publish date and title
+    - refactor article hashes to concat publish date (or scrape date month) and title
 
 
 - decide what we want to store and how
