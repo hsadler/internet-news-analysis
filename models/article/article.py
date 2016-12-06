@@ -1,12 +1,14 @@
 #!/usr/local/bin/python
+# -*- coding: utf-8 -*-
 
 # Article model
 
 import sys
-import MySQLdb as mdb
 import time
 import hashlib
 import pprint
+
+from models.database.database import MySQL_DB
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -47,8 +49,9 @@ class Article():
         if article_exists_in_db:
             return False
 
-        con = mdb.connect(host='localhost', user='root', passwd='', db='internet_news_analysis')
-        cur = con.cursor()
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
 
         with con:
 
@@ -72,8 +75,9 @@ class Article():
 
     def get_by_md5hash(self, md5hash):
 
-        con = mdb.connect(host='localhost', user='root', passwd='', db='internet_news_analysis')
-        cur = con.cursor(mdb.cursors.DictCursor)
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
 
         with con:
             cur.execute("SELECT * FROM articles WHERE md5hash = '{0}'".format(md5hash))

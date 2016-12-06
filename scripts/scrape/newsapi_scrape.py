@@ -1,4 +1,5 @@
 #!/usr/local/bin/python
+# -*- coding: utf-8 -*-
 
 import requests
 import pprint
@@ -10,7 +11,7 @@ from models.article.article import Article
 
 
 pp = pprint.PrettyPrinter(indent=4)
-logging.basicConfig(filename='scrape.log', level=logging.INFO)
+logging.basicConfig(filename='scrape.log', level=logging.DEBUG)
 
 
 def scrape():
