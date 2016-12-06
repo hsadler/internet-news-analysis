@@ -4,10 +4,10 @@ TODO:
     X find a way to only process articles if they've yet to be stored (hash article titles)
     X convert store_news.py to article_model.py with model and methods
     X add logging to file upon scrape start and end
-    - put on cron
+    X put on cron
     - add parsing of article pub dates to timestamps
     - add processing of headlines (chop up, store keywords)
-    - compose schema and add table for keywords
+    X compose schema and add table for keywords
     - refactor article hashes to concat publish date (or scrape date month) and title
 
 
