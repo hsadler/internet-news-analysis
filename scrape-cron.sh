@@ -1,5 +1,5 @@
 
 # python ../misc/py-path.py
 
-python -c 'import app; app.google_news_scrape()' >> logs/cron.log
+python -c 'import app; app.google_news_scrape(); app.newsapi_scrape()' >> logs/cron.log
 
