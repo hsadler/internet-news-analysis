@@ -10,7 +10,7 @@ cur = con.cursor()
 with con:
 
     # cur.execute('DROP TABLE articles;')
-    # cur.execute('DROP TABLE headline_keywords;')
+    # cur.execute('DROP TABLE headline_words;')
 
     # create articles table
     cur.execute("""
@@ -25,11 +25,11 @@ with con:
         md5hash VARCHAR(32));
     """)
 
-    # create headline_keywords table
+    # create headline_words table
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS headline_keywords(
+        CREATE TABLE IF NOT EXISTS headline_words(
         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-        keyword VARCHAR(50) NOT NULL,
+        word VARCHAR(50) NOT NULL,
         article_id INT(8) NOT NULL,
         scrape_ts INT(12) NOT NULL);
     """)

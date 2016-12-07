@@ -15,7 +15,9 @@ pp = pprint.PrettyPrinter(indent=4)
 
 class Article():
 
+
     def __init__(self):
+        self.id = None
         self.title = None
         self.url = None
         self.author = None
@@ -27,10 +29,6 @@ class Article():
 
     def create(self, title, url=None, author=None, description=None, publish_ts=None):
 
-        if title is None:
-            raise TypeError('Article must have a title.')
-            return False
-
         self.title = title
         self.url = url
         self.author = author
@@ -40,12 +38,12 @@ class Article():
         self.scrape_ts = int(time.time())
         self.md5hash = hashlib.md5(title.encode('ascii', 'ignore')).hexdigest()
 
-        return True
+        return self
 
 
     def save(self):
 
-        article_exists_in_db = self.get_by_md5hash(self.md5hash)
+        article_exists_in_db = self.exists_by_md5hash(self.md5hash)
         if article_exists_in_db:
             return False
 
@@ -70,10 +68,13 @@ class Article():
 
             cur.execute(query, data)
 
-        return True
+            cur.execute('SELECT LAST_INSERT_ID();')
+            self.id = cur.fetchone()['LAST_INSERT_ID()']
+
+        return self
 
 
-    def get_by_md5hash(self, md5hash):
+    def exists_by_md5hash(self, md5hash):
 
         db = MySQL_DB()
         con = db.connection
@@ -84,6 +85,7 @@ class Article():
             record = cur.fetchone()
 
         if record is not None:
+            self.id = record['id']
             self.title = record['title']
             self.url = record['url']
             self.author = record['author']
@@ -97,6 +99,7 @@ class Article():
 
     def print_dict(self):
         output = {
+            'id': self.id,
             'title': self.title,
             'url': self.url,
             'author': self.author,

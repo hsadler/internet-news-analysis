@@ -1,14 +1,17 @@
 
-
 TODO:
     X find a way to only process articles if they've yet to be stored (hash article titles)
     X convert store_news.py to article_model.py with model and methods
     X add logging to file upon scrape start and end
     X put on cron
-    - add parsing of article pub dates to timestamps
-    - add processing of headlines (chop up, store keywords)
-    X compose schema and add table for keywords
+    - add parsing of article publish dates to timestamps
+    - add processing of headlines (chop up, store words)
+    X compose schema and add table for headline words
     - refactor article hashes to concat publish date (or scrape date month) and title
+
+
+Sample query for 
+- select * from headline_words where scrape_ts between 'ts_int' and 'ts_int';
 
 
 - decide what we want to store and how
@@ -22,25 +25,18 @@ TODO:
         - remove undesired words
         - format as dictionary word count
 
+
 - database and schema
     article table schema:
         - id, url, author, title, description, scrape_ts, publish_ts, md5hash
-    headline_keyword schema:
-        - id, keyword (not unique), article_id, scrape_ts
-
-
-- scrape scripts for news APIs
-    - write simple scripts for scrape logging to file
-
-- crons for script execution
-    - write cron.bash for cron script batching
-    - perhaps this needs to go into a bash deploy file for setting the cron?
+    headline_word schema:
+        - id, word (not unique), article_id, scrape_ts
 
 
 notes about scraping/programmatic web requests:
-    - throttle rate of requests
+    X throttle rate of requests
     - rotate IPs (look into VPNs, shared proxies and TOR)
-    - user-agent string spoofing
+    X user-agent string spoofing
 
 
 
