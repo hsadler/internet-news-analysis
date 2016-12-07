@@ -15,6 +15,7 @@ pp = pprint.PrettyPrinter(indent=4)
 
 class Article():
 
+
     def __init__(self):
         self.title = None
         self.url = None
@@ -26,10 +27,6 @@ class Article():
 
 
     def create(self, title, url=None, author=None, description=None, publish_ts=None):
-
-        if title is None:
-            raise TypeError('Article must have a title.')
-            return False
 
         self.title = title
         self.url = url
