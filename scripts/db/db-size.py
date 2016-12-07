@@ -12,11 +12,13 @@ cur = con.cursor(mdb.cursors.DictCursor)
 
 with con:
 
-    cur.execute(
-        """SELECT table_schema "internet_news_analysis",
-        SUM(data_length + index_length) / (1024 * 1024) "Database Size in MB"
-        FROM information_schema.TABLES GROUP BY table_schema"""
-    )
+    cur.execute("""
+        SELECT table_name AS "Table",
+        ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)"
+        FROM information_schema.TABLES
+        WHERE table_schema = "internet_news_analysis"
+        ORDER BY (data_length + index_length) DESC;
+    """)
 
     record = cur.fetchone()
 
