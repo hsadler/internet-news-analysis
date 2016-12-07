@@ -10,7 +10,7 @@ TODO:
     - refactor article hashes to concat publish date (or scrape date month) and title
 
 
-Sample query for 
+Sample query for
 - select * from headline_words where scrape_ts between 'ts_int' and 'ts_int';
 
 

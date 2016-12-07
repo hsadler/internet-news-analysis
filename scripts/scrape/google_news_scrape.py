@@ -48,7 +48,7 @@ def scrape():
         article.save()
 
 
-    log_text = 'google rss scrape ended: {0}\n'.format(time.ctime())
+    log_text = 'google rss scrape ended: {0}'.format(time.ctime())
     print log_text
     logging.info(log_text)
 

@@ -16,5 +16,5 @@ def newsapi_scrape():
 #testing
 from models.headline_word.headline_word import HeadlineWord
 
-def test(): 
+def test():
 	HeadlineWord().create('hi', 1, 1234).save().print_dict()

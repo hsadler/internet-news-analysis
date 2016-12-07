@@ -74,7 +74,7 @@ def scrape():
             article.save()
 
 
-    log_text = 'newsapi json scrape ended: {0}'.format(time.ctime())
+    log_text = 'newsapi json scrape ended: {0}\n'.format(time.ctime())
     print log_text
     logging.info(log_text)
 
