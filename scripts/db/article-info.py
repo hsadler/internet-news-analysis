@@ -15,10 +15,11 @@ with con:
 
     # create articles table
     cur.execute("""
-        SELECT * FROM articles;
+        SELECT count(*) FROM articles;
     """)
 
-    articles = cur.fetchall()
-    pp.pprint(articles)
-    print 'article count: {0}'.format(len(articles))
+    article_count = cur.fetchone()['count(*)']
+
+    print 'article count: {0}'.format(article_count)
+
 
