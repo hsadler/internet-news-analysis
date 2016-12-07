@@ -14,6 +14,7 @@ class HeadlineWord():
 
 
     def __init__(self):
+        self.id = None
         self.word = None
         self.article_id = None
         self.scrape_ts = None
@@ -25,7 +26,7 @@ class HeadlineWord():
         self.article_id = article_id
         self.scrape_ts = scrape_ts
 
-        return True
+        return self
 
 
     def save(self):
@@ -48,11 +49,15 @@ class HeadlineWord():
 
             cur.execute(query, data)
 
-        return True
+            cur.execute('SELECT LAST_INSERT_ID();')
+            self.id = cur.fetchone()['LAST_INSERT_ID()']
+
+        return self
 
 
     def print_dict(self):
         output = {
+            'id': self.id,
             'word': self.word,
             'article_id': self.article_id,
             'scrape_ts': self.scrape_ts

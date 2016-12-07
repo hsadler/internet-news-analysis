@@ -1,5 +1,4 @@
 
-
 TODO:
     X find a way to only process articles if they've yet to be stored (hash article titles)
     X convert store_news.py to article_model.py with model and methods
