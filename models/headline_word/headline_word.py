@@ -58,13 +58,7 @@ class HeadlineWord():
 
 
     def print_dict(self):
-        output = {
-            'id': self.id,
-            'word': self.word,
-            'article_id': self.article_id,
-            'scrape_ts': self.scrape_ts
-        }
-        pp.pprint(output)
+        pp.pprint(self.__dict__)
 
 
 

@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-# Article model
+# Article Model
 
 import sys
 import time
@@ -13,12 +13,13 @@ from models.database.database import MySQL_DB
 pp = pprint.PrettyPrinter(indent=4)
 
 
+
 class Article():
 
 
-    def __init__(self, title, url=None, author=None, description=None, publish_ts=None):
+    def __init__(self, article_id=None, title, url=None, author=None, description=None, publish_ts=None):
         
-        self.id = None
+        self.article_id = article_id
         self.title = title
         self.url = url
         self.author = author
@@ -39,6 +40,28 @@ class Article():
             description = description,
             publish_ts = publish_ts         
         )
+
+
+    @classmethod
+    def get_by_article_id(cls, article_id):
+        
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
+
+        with con:
+
+            query = 'SELECT * FROM articles WHERE id = {0}'.format(article_id)
+            cur.execute(query)
+            record = cur.fetchone()
+
+        if record is None:
+            return False
+
+        # TODO: STOPPED HERE!!!!!!!!!
+
+
+
 
 
     def save(self):
@@ -69,7 +92,7 @@ class Article():
             cur.execute(query, data)
 
             cur.execute('SELECT LAST_INSERT_ID();')
-            self.id = cur.fetchone()['LAST_INSERT_ID()']
+            self.article_id = cur.fetchone()['LAST_INSERT_ID()']
 
         return self
 
@@ -88,17 +111,7 @@ class Article():
 
 
     def print_dict(self):
-        output = {
-            'id': self.id,
-            'title': self.title,
-            'url': self.url,
-            'author': self.author,
-            'description': self.description,
-            'publish_ts': self.publish_ts,
-            'scrape_ts': self.scrape_ts,
-            'md5hash': self.md5hash
-        }
-        pp.pprint(output)
+        pp.pprint(self.__dict__)
 
 
 
