@@ -13,20 +13,22 @@ pp = pprint.PrettyPrinter(indent=4)
 class HeadlineWord():
 
 
-    def __init__(self):
+    def __init__(self, word, article_id, sc):
+        
         self.id = None
-        self.word = None
-        self.article_id = None
-        self.scrape_ts = None
-
-
-    def create(self, word, article_id, scrape_ts):
-
         self.word = word
         self.article_id = article_id
         self.scrape_ts = scrape_ts
 
-        return self
+
+    @classmethod
+    def create(cls, word, article_id, scrape_ts):
+
+        return cls(
+            word = word,
+            article_id = article_id,
+            scrape_ts = scrape_ts
+        )
 
 
     def save(self):

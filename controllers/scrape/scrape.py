@@ -16,8 +16,8 @@ pp = pprint.PrettyPrinter(indent=4)
 logging.basicConfig(filename='logs/scrape.log', level=logging.DEBUG)
 
 
-class Scrape():
 
+class Scrape():
 
 
     @staticmethod
@@ -48,15 +48,15 @@ class Scrape():
             title = item.find('title').text
             pub_time = item.find('pubDate').text
 
-            article = Article()
-            article.create(url=url, title=title)
-            article.save()
+            Article.create(
+                url = url, 
+                title = title
+            ).save()
 
 
         log_text = 'google rss scrape ended: {0}'.format(time.ctime())
         print log_text
         logging.info(log_text)
-
 
 
 
@@ -111,14 +111,12 @@ class Scrape():
 
             for article_dict in articles_data[u'articles']:
 
-                article = Article()
-                article.create(
+                Article.create(
                     title=article_dict[u'title'],
                     url=article_dict[u'url'],
                     author=article_dict[u'author'],
                     description=article_dict[u'description']
-                )
-                article.save()
+                ).save()
 
 
         log_text = 'newsapi json scrape ended: {0}\n'.format(time.ctime())
