@@ -57,6 +57,10 @@ class HeadlineWord():
         return self
 
 
+    def exists_by_article_id(self, article_id):
+        print 'checking if words exist by article id: {0}'.format(article_id)
+
+
     def print_dict(self):
         pp.pprint(self.__dict__)
 

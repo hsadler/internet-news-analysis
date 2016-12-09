@@ -20,15 +20,15 @@ class ArticleProcessor():
     @staticmethod
     def create_headline_words_from_article(article_id):
 
+        # check if words have been created from article_id already
+
         # TODO: improve word validation and stripping
         def word_is_valid(word):
             return len(word) > 1
 
         article = Article.get_by_article_id(article_id)
-        # article.print_dict()
 
         headline_words = [w for w in article.title.split() if word_is_valid(w)]
-        # print headline_words
 
         for word in headline_words:
 
