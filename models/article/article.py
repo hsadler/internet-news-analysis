@@ -17,19 +17,22 @@ pp = pprint.PrettyPrinter(indent=4)
 class Article():
 
 
-    def __init__(self, article_id=None, title, url=None, author=None, description=None, publish_ts=None):
-        
-        self.article_id = article_id
+
+    def __init__(self, title, article_id=None, url=None, author=None,
+        description=None, publish_ts=None, scrape_ts=None, md5hash=None):
+
         self.title = title
+        self.article_id = article_id
         self.url = url
         self.author = author
         self.description = description
         self.publish_ts = publish_ts
+        self.scrape_ts = scrape_ts
+        self.md5hash = md5hash
 
-        self.scrape_ts = int(time.time())
-        self.md5hash = hashlib.md5(title.encode('ascii', 'ignore')).hexdigest()
 
 
+    # create instance from gathered data
     @classmethod
     def create(cls, title, url=None, author=None, description=None, publish_ts=None):
 
@@ -38,13 +41,34 @@ class Article():
             url = url,
             author = author,
             description = description,
-            publish_ts = publish_ts         
+            publish_ts = publish_ts,
+            scrape_ts = int(time.time()),
+            md5hash = hashlib.md5(title.encode('ascii', 'ignore')).hexdigest()
         )
 
 
+
+    # create instance from db record
+    @classmethod
+    def create_from_db_record(cls, record):
+
+        return cls(
+            title = record['title'],
+            article_id = record['id'],
+            url = record['url'],
+            author = record['author'],
+            description = record['description'],
+            publish_ts = record['publish_ts'],
+            scrape_ts = record['scrape_ts'],
+            md5hash = record['md5hash']
+        )
+
+
+
+    # retrieve article record from db and create instance
     @classmethod
     def get_by_article_id(cls, article_id):
-        
+
         db = MySQL_DB()
         con = db.connection
         cur = db.cur
@@ -58,12 +82,11 @@ class Article():
         if record is None:
             return False
 
-        # TODO: STOPPED HERE!!!!!!!!!
+        return cls.create_from_db_record(record)
 
 
 
-
-
+    # save model to db record
     def save(self):
 
         article_exists_in_db = self.exists_by_md5hash(self.md5hash)
@@ -76,8 +99,10 @@ class Article():
 
         with con:
 
-            query = """INSERT INTO articles(title, url, author, description,
-            publish_ts, scrape_ts, md5hash) VALUES(%s, %s, %s, %s, %s, %s, %s);"""
+            query = """
+                INSERT INTO articles(title, url, author, description, publish_ts,
+                scrape_ts, md5hash) VALUES(%s, %s, %s, %s, %s, %s, %s);
+            """
 
             data = (
                 self.title,
@@ -97,6 +122,8 @@ class Article():
         return self
 
 
+
+    # check if article exists in db by article hash
     def exists_by_md5hash(self, md5hash):
 
         db = MySQL_DB()
@@ -108,6 +135,7 @@ class Article():
             record = cur.fetchone()
 
         return record is not None
+
 
 
     def print_dict(self):
