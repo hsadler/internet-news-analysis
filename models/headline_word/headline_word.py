@@ -13,9 +13,9 @@ pp = pprint.PrettyPrinter(indent=4)
 class HeadlineWord():
 
 
-    def __init__(self, word, article_id, sc):
-        
-        self.id = None
+    def __init__(self, word, article_id, scrape_ts, word_id=None):
+
+        self.word_id = word_id
         self.word = word
         self.article_id = article_id
         self.scrape_ts = scrape_ts
@@ -52,7 +52,7 @@ class HeadlineWord():
             cur.execute(query, data)
 
             cur.execute('SELECT LAST_INSERT_ID();')
-            self.id = cur.fetchone()['LAST_INSERT_ID()']
+            self.word_id = cur.fetchone()['LAST_INSERT_ID()']
 
         return self
 
