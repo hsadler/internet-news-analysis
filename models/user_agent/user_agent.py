@@ -1,6 +1,8 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# UserAgent Model
+
 import json
 import random
 

@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-# HeadlineWord model
+# HeadlineWord Model
 
 import pprint
 
@@ -57,8 +57,23 @@ class HeadlineWord():
         return self
 
 
-    def exists_by_article_id(self, article_id):
+    @staticmethod
+    def record_exists_by_article_id(article_id):
+        
         print 'checking if words exist by article id: {0}'.format(article_id)
+
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
+
+        with con:
+            query = 'SELECT * FROM headline_words WHERE article_id = {0}'.format(article_id)
+            cur.execute(query)
+            record = cur.fetchone()
+
+        print 'record: {0}'.format(record)
+
+        return record is not None        
 
 
     def print_dict(self):

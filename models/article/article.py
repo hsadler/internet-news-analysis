@@ -89,7 +89,7 @@ class Article():
     # save model to db record
     def save(self):
 
-        article_exists_in_db = self.exists_by_md5hash(self.md5hash)
+        article_exists_in_db = self.record_exists_by_md5hash(self.md5hash)
         if article_exists_in_db:
             return False
 
@@ -124,7 +124,7 @@ class Article():
 
 
     # check if article exists in db by article hash
-    def exists_by_md5hash(self, md5hash):
+    def record_exists_by_md5hash(self, md5hash):
 
         db = MySQL_DB()
         con = db.connection

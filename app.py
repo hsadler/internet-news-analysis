@@ -1,6 +1,8 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# Main App
+
 from controllers.scrape.scrape import Scrape
 from controllers.articles.article_processor import ArticleProcessor
 
@@ -18,6 +20,9 @@ def newsapi_scrape():
 # article processing
 def process_article_headline(article_id):
 	ArticleProcessor.create_headline_words_from_article(article_id)
+
+def process_article_headlines(article_ids):
+	ArticleProcessor.create_headline_words_from_articles(article_ids)
 
 
 

@@ -49,7 +49,7 @@ class Scrape():
             pub_time = item.find('pubDate').text
 
             Article.create(
-                url = url, 
+                url = url,
                 title = title
             ).save()
 
@@ -112,16 +112,29 @@ class Scrape():
             for article_dict in articles_data[u'articles']:
 
                 Article.create(
-                    title=article_dict[u'title'],
-                    url=article_dict[u'url'],
-                    author=article_dict[u'author'],
-                    description=article_dict[u'description']
+                    title = article_dict[u'title'],
+                    url = article_dict[u'url'],
+                    author = article_dict[u'author'],
+                    description = article_dict[u'description']
                 ).save()
 
 
         log_text = 'newsapi json scrape ended: {0}\n'.format(time.ctime())
         print log_text
         logging.info(log_text)
+
+
+
+    # helper methods
+    @staticmethod
+    def limit_field(input, limit):
+        
+        if type(input) is str:
+            return input[:limit]
+        else:
+            return input
+
+
 
 
 

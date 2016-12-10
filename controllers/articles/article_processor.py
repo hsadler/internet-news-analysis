@@ -21,6 +21,9 @@ class ArticleProcessor():
     def create_headline_words_from_article(article_id):
 
         # check if words have been created from article_id already
+        if HeadlineWord.record_exists_by_article_id(article_id):
+            print 'headline_word records already exist from article id: {0}'.format(article_id)
+            return False
 
         # TODO: improve word validation and stripping
         def word_is_valid(word):
@@ -37,6 +40,15 @@ class ArticleProcessor():
                 article_id = article.article_id,
                 scrape_ts = article.scrape_ts
             ).save()
+
+        print 'create_headline_words_from_article success'
+
+
+    @classmethod
+    def create_headline_words_from_articles(cls, article_id_list):
+        
+        for article_id in article_id_list:
+            cls.create_headline_words_from_article(article_id)
 
 
     @staticmethod
