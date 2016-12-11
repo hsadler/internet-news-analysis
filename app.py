@@ -18,12 +18,8 @@ def newsapi_scrape():
 
 
 # article processing
-def process_article_headline(article_id):
-	ArticleProcessor.create_headline_words_from_article(article_id)
-
 def process_article_headlines(article_ids):
 	ArticleProcessor.create_headline_words_from_articles(article_ids)
-
 
 
 
