@@ -69,7 +69,20 @@ class HeadlineWord():
             cur.execute(query)
             record = cur.fetchone()
 
-        return record is not None        
+        return record is not None
+
+
+    @staticmethod
+    def delete_all():
+
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
+
+        with con:
+            cur.execute('TRUNCATE TABLE headline_words')
+
+        print 'table headline_words truncated...'
 
 
     def print_dict(self):

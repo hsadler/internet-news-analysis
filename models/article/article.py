@@ -164,6 +164,21 @@ class Article():
 
 
 
+    @staticmethod
+    def get_max_article_id():
+
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
+
+        with con:
+            cur.execute('SELECT max(id) as max_id FROM articles')
+            record = cur.fetchone()
+
+        return int(record['max_id'])
+
+
+
     def print_dict(self):
         pp.pprint(self.__dict__)
 
