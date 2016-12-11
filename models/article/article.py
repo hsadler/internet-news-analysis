@@ -86,6 +86,32 @@ class Article():
 
 
 
+    @classmethod
+    def get_by_article_ids(cls, article_ids):
+
+        if len(article_ids) == 0:
+            return []
+
+        db = MySQL_DB()
+        con = db.connection
+        cur = db.cur
+
+        with con:
+            article_ids_string = ','.join(str(num) for num in set(article_ids))
+
+            query = 'SELECT * FROM articles WHERE id in ({0})'.format(article_ids_string)
+            cur.execute(query)
+            records = cur.fetchall()
+
+        articles = []
+
+        for record in records:
+            articles.append(cls.create_from_db_record(record))
+
+        return articles
+
+
+
     # save model to db record
     def save(self):
 

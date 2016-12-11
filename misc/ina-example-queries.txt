@@ -1,0 +1,12 @@
+
+
+
+get top 30 occuring words
+
+SELECT word, count(*) FROM headline_words GROUP BY word ORDER BY count(*) DESC LIMIT 30; 
+
+
+
+get multiple articles by list of article_ids
+
+SELECT * FROM articles WHERE id in (1,50,300,0);

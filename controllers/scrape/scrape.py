@@ -125,16 +125,4 @@ class Scrape():
 
 
 
-    # helper methods
-    @staticmethod
-    def limit_field(input, limit):
-        
-        if type(input) is str:
-            return input[:limit]
-        else:
-            return input
-
-
-
-
 

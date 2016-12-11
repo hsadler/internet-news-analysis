@@ -27,15 +27,10 @@ def process_article_headlines(article_ids):
 
 
 
-# testing headline words
-from models.headline_word.headline_word import HeadlineWord
-
-def create_headline_word_and_save():
-	HeadlineWord().create('hi', 1, 1234).save().print_dict()
-
-
 # testing article retrieval
 from models.article.article import Article
 
-def get_article_by_id(article_id):
-    Article.get_by_article_id(article_id).print_dict()
+def get_articles_by_ids(article_ids):
+    articles = Article.get_by_article_ids(article_ids)
+    for article in articles:
+    	article.print_dict()
