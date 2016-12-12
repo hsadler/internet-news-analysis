@@ -20,7 +20,7 @@ with con:
         ORDER BY (data_length + index_length) DESC;
     """)
 
-    record = cur.fetchone()
+    record = cur.fetchall()
 
     pp.pprint(record)
 
