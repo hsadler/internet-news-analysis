@@ -6,6 +6,7 @@
 import pprint
 
 from models.database.database import MySQL_DB
+from models.word_blacklist.word_blacklist import WordBlacklist
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -58,6 +59,11 @@ class HeadlineWord():
 
 
     @staticmethod
+    def word_is_valid(word):
+        return len(word) > 1
+
+
+    @staticmethod
     def record_exists_by_article_id(article_id):
         
         db = MySQL_DB()
@@ -87,7 +93,5 @@ class HeadlineWord():
 
     def print_dict(self):
         pp.pprint(self.__dict__)
-
-
 
 

@@ -20,11 +20,6 @@ class ArticleProcessor():
     
     @staticmethod
     def create_headline_words_from_articles(article_ids):
-        
-        
-        # TODO: improve word validation and stripping
-        def word_is_valid(word):
-            return len(word) > 1
 
 
         # filter article_ids to only contain article_ids yet to be processed
@@ -46,7 +41,7 @@ class ArticleProcessor():
         # create and save headline_words from articles
         for article in articles:
 
-            headline_words = [w for w in article.title.split() if word_is_valid(w)]
+            headline_words = [w for w in article.title.split() if HeadlineWord.word_is_valid(w)]
 
             for word in headline_words:
 

@@ -26,4 +26,15 @@ def process_all_headlines(batch_amount, force=False):
 
 
 
+# word blacklist
+from models.word_blacklist.word_blacklist import WordBlacklist
+
+def get_word_blacklist():
+	print WordBlacklist.get_blacklist()
+
+def add_blacklist_word(word):
+	WordBlacklist.add_to_blacklist(word)
+
+
 # testing
+
