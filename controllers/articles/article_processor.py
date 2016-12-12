@@ -19,7 +19,34 @@ class ArticleProcessor():
 
     
     @staticmethod
-    def create_headline_words_from_articles(article_ids):
+    def get_words_from_title(title):
+
+
+        # print 'raw title: {0}'.format(title)
+
+        
+        def format_word(word):
+            formatted = []
+            for char in word:
+                if char.isalnum():
+                    formatted.append(char)
+            return ''.join(formatted)
+
+
+        title_words = [format_word(word) for word in title.split()]
+
+        # print 'formatted title words: {0}'.format(title_words)
+
+        headline_words = [w for w in title_words if HeadlineWord.word_is_valid(w)]
+
+        # print 'final output headline_words: {0}'.format(headline_words)
+
+        return headline_words
+
+
+    
+    @classmethod
+    def create_headline_words_from_articles(cls, article_ids):
 
 
         # filter article_ids to only contain article_ids yet to be processed
@@ -41,7 +68,9 @@ class ArticleProcessor():
         # create and save headline_words from articles
         for article in articles:
 
-            headline_words = [w for w in article.title.split() if HeadlineWord.word_is_valid(w)]
+            # headline_words = [w for w in article.title.split() if HeadlineWord.word_is_valid(w)]
+
+            headline_words = cls.get_words_from_title(article.title)
 
             for word in headline_words:
 

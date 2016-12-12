@@ -60,7 +60,7 @@ class HeadlineWord():
 
     @staticmethod
     def word_is_valid(word):
-        return len(word) > 1
+        return len(word) > 1 and word.lower() not in WordBlacklist.get_blacklist()
 
 
     @staticmethod

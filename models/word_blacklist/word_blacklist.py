@@ -25,11 +25,8 @@ class WordBlacklist():
         
         # if cached version of blacklist exists and the cache is valid, return cached word_blacklist
         if cls._blacklist is not None and cls._cache_is_valid:
-            print 'retrieving cached version of word_blacklist...'
             return cls._blacklist
 
-        
-        print 'retrieving word_blacklist from file...'
 
         try:
             with open('models/word_blacklist/word-blacklist.json') as file:
@@ -46,9 +43,13 @@ class WordBlacklist():
 
 
     @classmethod
-    def add_to_blacklist(cls, word):
+    def add_to_blacklist(cls, words):
         
+        
+        if isinstance(words, basestring):
+            words = [words]
 
+        
         with open('models/word_blacklist/word-blacklist.json', 'r+') as file:
             
             try:
@@ -57,16 +58,19 @@ class WordBlacklist():
                 blacklist = [];
             
             # append word to blacklist json file if it doesn't yet exist
-            if word not in blacklist:
-                
-                file.seek(0)                
-                blacklist.append(word)
-                json.dump(blacklist, file)
-                file.truncate()
+            for word in words:
 
-                
-                cls._blacklist = blacklist;
-                cls._cache_is_valid = False
+                if word not in blacklist:
+                    blacklist.append(word)
+
+
+            file.seek(0)                
+            json.dump(blacklist, file)
+            file.truncate()
+        
+
+        cls._blacklist = blacklist;
+        cls._cache_is_valid = False
 
         
 
