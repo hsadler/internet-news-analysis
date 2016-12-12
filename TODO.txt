@@ -8,6 +8,9 @@ TODO:
     - add processing of headlines (chop up, store words)
     X compose schema and add table for headline words
     - refactor article hashes to concat publish date (or scrape date month) and title
+    - add word_blacklist
+    - make sure all storage of headline_words is lowercase
+    - 
 
 
 Sample query for

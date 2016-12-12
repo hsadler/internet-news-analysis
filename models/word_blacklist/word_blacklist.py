@@ -1,42 +1,42 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-# HeadlineWord Model
+# WordBlacklist Model
 
+import json
 import pprint
-
-from models.database.database import MySQL_DB
 
 pp = pprint.PrettyPrinter(indent=4)
 
 
+
 class WordBlacklist():
+
 
 
     _blacklist = None
     _cache_is_valid = False
 
 
+
     @classmethod
     def get_blacklist(cls):
 
+        
         # if cached version of blacklist exists and the cache is valid, return cached word_blacklist
         if cls._blacklist is not None and cls._cache_is_valid:
             print 'retrieving cached version of word_blacklist...'
             return cls._blacklist
 
-        db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
+        
+        print 'retrieving word_blacklist from file...'
 
-        with con:
-            print 'retrieving word_blacklist from database...'
-            cur.execute('SELECT word FROM word_blacklist WHERE active = 1')
-            records = cur.fetchall()
-
-        blacklist = []
-        for record in records:
-            blacklist.append(record['word'])
+        try:
+            with open('models/word_blacklist/word-blacklist.json') as file:
+                blacklist = json.load(file)
+        except:
+            blacklist = []
+        
         
         cls._blacklist = blacklist
         cls._cache_is_valid = True
@@ -44,23 +44,31 @@ class WordBlacklist():
         return blacklist
 
 
+
     @classmethod
     def add_to_blacklist(cls, word):
         
-        # insert word into word_blacklist table
-        db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with open('models/word_blacklist/word-blacklist.json', 'r+') as file:
+            
             try:
-                query = 'INSERT INTO word_blacklist(word, active) VALUES("{0}", 1)'.format(word)
-                cur.execute(query)
-                # invalidate cache
-                cls._cache_is_valid = False
+                blacklist = json.load(file)
             except:
-                print 'could not insert word into blacklist: {0}'.format(word)
+                blacklist = [];
+            
+            # append word to blacklist json file if it doesn't yet exist
+            if word not in blacklist:
+                
+                file.seek(0)                
+                blacklist.append(word)
+                json.dump(blacklist, file)
+                file.truncate()
 
+                
+                cls._blacklist = blacklist;
+                cls._cache_is_valid = False
+
+        
 
     @staticmethod
     def remove_from_blacklist(word):
