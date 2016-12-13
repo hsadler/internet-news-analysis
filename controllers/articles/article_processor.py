@@ -17,14 +17,11 @@ logging.basicConfig(filename='logs/scrape.log', level=logging.DEBUG)
 class ArticleProcessor():
 
 
-    
+
     @staticmethod
     def get_words_from_title(title):
 
 
-        # print 'raw title: {0}'.format(title)
-
-        
         def format_word(word):
             formatted = []
             for char in word:
@@ -35,18 +32,14 @@ class ArticleProcessor():
 
         title_words = [format_word(word) for word in title.split()]
 
-        # print 'formatted title words: {0}'.format(title_words)
-
         headline_words = [w for w in title_words if HeadlineWord.word_is_valid(w)]
-
-        # print 'final output headline_words: {0}'.format(headline_words)
 
         return headline_words
 
 
-    
+
     @classmethod
-    def create_headline_words_from_articles(cls, article_ids):
+    def create_headline_words_from_articles(cls, article_ids, force=False):
 
 
         # filter article_ids to only contain article_ids yet to be processed
@@ -54,21 +47,17 @@ class ArticleProcessor():
 
         for article_id in article_ids:
 
-            if HeadlineWord.record_exists_by_article_id(article_id):
-                # print 'headline_word records already exist from article id: {0}'.format(article_id)
-                pass
-            else:
+            if force or not HeadlineWord.record_exists_by_article_id(article_id):
+
                 article_ids_for_processing.append(article_id)
 
 
         # batch fetch article models by article_id
         articles = Article.get_by_article_ids(article_ids_for_processing)
 
-        
+
         # create and save headline_words from articles
         for article in articles:
-
-            # headline_words = [w for w in article.title.split() if HeadlineWord.word_is_valid(w)]
 
             headline_words = cls.get_words_from_title(article.title)
 
@@ -80,8 +69,6 @@ class ArticleProcessor():
                     scrape_ts = article.scrape_ts
                 ).save()
 
-            # print 'create_headline_words_from_article success'                    
-        
 
 
     @classmethod
@@ -90,12 +77,12 @@ class ArticleProcessor():
 
         print 'process_all_headlines START...'
 
-        
+
         # if force is true, truncate headline_word table for fresh processing
         if force:
             HeadlineWord.delete_all()
 
-        
+
         max_id = Article.get_max_article_id()
 
 
@@ -111,7 +98,7 @@ class ArticleProcessor():
 
             batch_range = range(current_batch_start, current_batch_end)
 
-            cls.create_headline_words_from_articles(batch_range)
+            cls.create_headline_words_from_articles(batch_range, force)
 
             batch_group += 1
 

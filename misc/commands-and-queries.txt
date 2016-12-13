@@ -1,0 +1,12 @@
+
+
+
+get top 30 occuring words
+
+SELECT word, count(*) FROM headline_words GROUP BY word ORDER BY count(*) DESC LIMIT 30;
+
+
+
+process all headlines
+
+python -c 'import app; app.process_all_headlines(force=True)'
