@@ -12,6 +12,8 @@ from xml.etree import ElementTree
 from models.user_agent.user_agent import UserAgent
 from models.article.article import Article
 
+from controllers.articles.article_processor import ArticleProcessor
+
 pp = pprint.PrettyPrinter(indent=4)
 logging.basicConfig(filename='logs/scrape.log', level=logging.DEBUG)
 
@@ -42,16 +44,27 @@ class Scrape():
         items = tree.find('channel').findall('item')
 
 
+        # save article ids for headline processing
+        article_ids = []
+
         for item in items:
 
+            # get article info and save
             url = item.find('link').text
             title = item.find('title').text
             pub_time = item.find('pubDate').text
 
-            Article.create(
+            article = Article.create(
                 url = url,
                 title = title
             ).save()
+
+            if article:
+                article_ids.append(article.article_id)
+
+
+        # process and save article headlines
+        ArticleProcessor.create_headline_words_from_articles(article_ids)
 
 
         log_text = 'google rss scrape ended: {0}'.format(time.ctime())
@@ -109,14 +122,24 @@ class Scrape():
             articles_data = articles_res.json()
 
 
+            # save article ids for headline processing
+            article_ids = []
+
             for article_dict in articles_data[u'articles']:
 
-                Article.create(
+                article = Article.create(
                     title = article_dict[u'title'],
                     url = article_dict[u'url'],
                     author = article_dict[u'author'],
                     description = article_dict[u'description']
                 ).save()
+
+                if article:
+                    article_ids.append(article.article_id)
+
+
+            # process and save article headlines
+            ArticleProcessor.create_headline_words_from_articles(article_ids)
 
 
         log_text = 'newsapi json scrape ended: {0}\n'.format(time.ctime())

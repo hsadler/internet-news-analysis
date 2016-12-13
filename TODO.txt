@@ -10,7 +10,7 @@ TODO:
     - refactor article hashes to concat publish date (or scrape date month) and title
     - add word_blacklist
     - make sure all storage of headline_words is lowercase
-    - 
+    -
 
 
 Sample query for

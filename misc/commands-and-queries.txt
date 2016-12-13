@@ -9,4 +9,4 @@ SELECT word, count(*) FROM headline_words GROUP BY word ORDER BY count(*) DESC L
 
 process all headlines
 
-python -c 'import app; app.process_all_headlines(force=True)'
+python -c 'import app; app.process_all_headlines()'

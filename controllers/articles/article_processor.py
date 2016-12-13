@@ -52,6 +52,9 @@ class ArticleProcessor():
                 article_ids_for_processing.append(article_id)
 
 
+        # print 'processing article headlines from article ids: {0}'.format(article_ids_for_processing)
+
+
         # batch fetch article models by article_id
         articles = Article.get_by_article_ids(article_ids_for_processing)
 
