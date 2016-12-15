@@ -29,12 +29,22 @@ def process_all_headlines(batch_amount=20, force=False):
 # word blacklist
 from models.word_blacklist.word_blacklist import WordBlacklist
 
-def get_word_blacklist():
-	print WordBlacklist.get_blacklist()
-
 def add_blacklist_word(words):
 	WordBlacklist.add_to_blacklist(words)
 
 
 # testing
+from models.email.email import Email
+
+email = Email('harrysadlermusic@gmail.com', 'my subject', 'hi there')
+email.print_dict()
+
+
+
+
+
+
+
+
+
 
