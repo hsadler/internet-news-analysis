@@ -36,8 +36,8 @@ def add_blacklist_word(words):
 # testing
 from models.email.email import Email
 
-email = Email('harrysadlermusic@gmail.com', 'my subject', 'hi there')
-email.print_dict()
+Email('harrysadlermusic@gmail.com', 'my subject', 'hi there').send().print_dict()
+
 
 
 
