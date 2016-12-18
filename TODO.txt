@@ -1,15 +1,10 @@
 
 TODO:
-    X find a way to only process articles if they've yet to be stored (hash article titles)
-    X convert store_news.py to article_model.py with model and methods
-    X add logging to file upon scrape start and end
-    X put on cron
     - add parsing of article publish dates to timestamps
-    - add processing of headlines (chop up, store words)
-    X compose schema and add table for headline words
     - refactor article hashes to concat publish date (or scrape date month) and title
-    - add word_blacklist
-    - make sure all storage of headline_words is lowercase
+    - add email report to cron (email a report once a day)
+    - add 'active' column to headline_words table
+    - fix headline processing to only strip beggining and end of words
     -
 
 
@@ -39,6 +34,7 @@ Sample query for
 notes about scraping/programmatic web requests:
     X throttle rate of requests
     - rotate IPs (look into VPNs, shared proxies and TOR)
+    - get multiple newsapi tokens and rotate
     X user-agent string spoofing
 
 

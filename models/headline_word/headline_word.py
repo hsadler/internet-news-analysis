@@ -11,7 +11,9 @@ from models.word_blacklist.word_blacklist import WordBlacklist
 pp = pprint.PrettyPrinter(indent=4)
 
 
+
 class HeadlineWord():
+
 
 
     def __init__(self, word, article_id, scrape_ts, word_id=None):
@@ -22,6 +24,7 @@ class HeadlineWord():
         self.scrape_ts = scrape_ts
 
 
+
     @classmethod
     def create(cls, word, article_id, scrape_ts):
 
@@ -30,6 +33,7 @@ class HeadlineWord():
             article_id = article_id,
             scrape_ts = scrape_ts
         )
+
 
 
     def save(self):
@@ -58,14 +62,17 @@ class HeadlineWord():
         return self
 
 
+
     @staticmethod
     def word_is_valid(word):
+
         return len(word) > 1 and word.lower() not in WordBlacklist.get_blacklist()
+
 
 
     @staticmethod
     def record_exists_by_article_id(article_id):
-        
+
         db = MySQL_DB()
         con = db.connection
         cur = db.cur
@@ -76,6 +83,18 @@ class HeadlineWord():
             record = cur.fetchone()
 
         return record is not None
+
+
+
+    @staticmethod
+    def get_top_headline_words_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
+
+        print 'getting top {0} headline words from {1} to {2}'.format(
+            word_amount,
+            start_ts,
+            end_ts
+        )
+
 
 
     @staticmethod
@@ -89,6 +108,7 @@ class HeadlineWord():
             cur.execute('TRUNCATE TABLE headline_words')
 
         print 'table headline_words truncated...'
+
 
 
     def print_dict(self):

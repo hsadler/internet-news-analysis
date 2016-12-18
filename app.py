@@ -33,17 +33,6 @@ def add_blacklist_word(words):
 	WordBlacklist.add_to_blacklist(words)
 
 
-# testing
-# from models.email.email import Email
-
-# Email('harrysadlermusic@gmail.com', 'my subject', 'hi there').send().print_dict()
-
-
-
-
-
-
-
 
 
 

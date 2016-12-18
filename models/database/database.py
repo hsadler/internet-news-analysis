@@ -19,3 +19,15 @@ class MySQL_DB():
         self.cur.execute('SET CHARACTER SET utf8;')
         self.cur.execute('SET character_set_connection=utf8;')
 
+
+    def get_size(self):
+
+        self.cur.execute("""
+            SELECT table_name AS "Table",
+            ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)"
+            FROM information_schema.TABLES
+            WHERE table_schema = "internet_news_analysis"
+            ORDER BY (data_length + index_length) DESC;
+        """)
+
+        return cur.fetchall()
