@@ -39,10 +39,8 @@ class HeadlineWord():
     def save(self):
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with db.connection:
 
             query = """
                 INSERT INTO headline_words(word, article_id, scrape_ts) VALUES(%s, %s, %s);
@@ -54,10 +52,10 @@ class HeadlineWord():
                 self.scrape_ts,
             )
 
-            cur.execute(query, data)
+            db.cur.execute(query, data)
 
-            cur.execute('SELECT LAST_INSERT_ID();')
-            self.word_id = cur.fetchone()['LAST_INSERT_ID()']
+            db.cur.execute('SELECT LAST_INSERT_ID();')
+            self.word_id = db.cur.fetchone()['LAST_INSERT_ID()']
 
         return self
 
@@ -74,13 +72,11 @@ class HeadlineWord():
     def record_exists_by_article_id(article_id):
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with db.connection:
             query = 'SELECT * FROM headline_words WHERE article_id = {0}'.format(article_id)
-            cur.execute(query)
-            record = cur.fetchone()
+            db.cur.execute(query)
+            record = db.cur.fetchone()
 
         return record is not None
 
@@ -89,11 +85,28 @@ class HeadlineWord():
     @staticmethod
     def get_top_headline_words_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
 
-        print 'getting top {0} headline words from {1} to {2}'.format(
+        print 'getting top {0} headline words from timestamp {1} to timestamp {2}'.format(
             word_amount,
             start_ts,
             end_ts
         )
+
+        db = MySQL_DB()
+
+        with db.connection:
+
+            query = """
+                SELECT word, count(*) AS count FROM headline_words
+                WHERE scrape_ts BETWEEN {0} AND {1}
+                GROUP BY word ORDER BY count(*) DESC LIMIT {2};
+            """.format(start_ts, end_ts, word_amount)
+
+            db.cur.execute(query)
+
+            records = db.cur.fetchall()
+            pp.pprint(records)
+
+            return records
 
 
 
@@ -101,11 +114,9 @@ class HeadlineWord():
     def delete_all():
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
-            cur.execute('TRUNCATE TABLE headline_words')
+        with db.connection:
+            db.cur.execute('TRUNCATE TABLE headline_words')
 
         print 'table headline_words truncated...'
 

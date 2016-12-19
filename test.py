@@ -14,3 +14,8 @@ from models.email.email import Email
 from controllers.reports.reports import Reports
 
 Reports.send_weekly_report()
+
+
+from models.headline_word.headline_word import HeadlineWord
+
+# HeadlineWord.get_top_headline_words_count_by_timestamp_period(1481609486, 1481609586, 20)
