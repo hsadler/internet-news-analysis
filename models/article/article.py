@@ -70,14 +70,12 @@ class Article():
     def get_by_article_id(cls, article_id):
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with db.connection:
 
             query = 'SELECT * FROM articles WHERE id = {0}'.format(article_id)
-            cur.execute(query)
-            record = cur.fetchone()
+            db.cur.execute(query)
+            record = db.cur.fetchone()
 
         if record is None:
             return False
@@ -93,15 +91,13 @@ class Article():
             return []
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with db.connection:
             article_ids_string = ','.join(str(num) for num in set(article_ids))
 
             query = 'SELECT * FROM articles WHERE id in ({0})'.format(article_ids_string)
-            cur.execute(query)
-            records = cur.fetchall()
+            db.cur.execute(query)
+            records = db.cur.fetchall()
 
         articles = []
 
@@ -120,10 +116,8 @@ class Article():
             return False
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
+        with db.connection:
 
             query = """
                 INSERT INTO articles(title, url, author, description, publish_ts,
@@ -140,10 +134,10 @@ class Article():
                 self.md5hash
             )
 
-            cur.execute(query, data)
+            db.cur.execute(query, data)
 
-            cur.execute('SELECT LAST_INSERT_ID();')
-            self.article_id = cur.fetchone()['LAST_INSERT_ID()']
+            db.cur.execute('SELECT LAST_INSERT_ID();')
+            self.article_id = db.cur.fetchone()['LAST_INSERT_ID()']
 
         return self
 
@@ -151,12 +145,6 @@ class Article():
 
     @staticmethod
     def get_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
-
-        # print 'getting top {0} headline words from timestamp {1} to timestamp {2}'.format(
-        #     word_amount,
-        #     start_ts,
-        #     end_ts
-        # )
 
         db = MySQL_DB()
 
@@ -170,7 +158,6 @@ class Article():
             db.cur.execute(query)
 
             count = db.cur.fetchone()['count']
-            # pp.pprint(records)
 
             return count
 
@@ -180,12 +167,10 @@ class Article():
     def record_exists_by_md5hash(self, md5hash):
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
-            cur.execute("SELECT * FROM articles WHERE md5hash = '{0}'".format(md5hash))
-            record = cur.fetchone()
+        with db.connection:
+            db.cur.execute("SELECT * FROM articles WHERE md5hash = '{0}'".format(md5hash))
+            record = db.cur.fetchone()
 
         return record is not None
 
@@ -195,12 +180,10 @@ class Article():
     def get_max_article_id():
 
         db = MySQL_DB()
-        con = db.connection
-        cur = db.cur
 
-        with con:
-            cur.execute('SELECT max(id) as max_id FROM articles')
-            record = cur.fetchone()
+        with db.connection:
+            db.cur.execute('SELECT max(id) as max_id FROM articles')
+            record = db.cur.fetchone()
 
         return int(record['max_id'])
 

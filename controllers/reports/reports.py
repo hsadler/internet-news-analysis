@@ -24,26 +24,38 @@ class Reports():
     def send_weekly_report(cls):
 
 
-        # print 'sending weekly report...'
-
         report_parts = []
+
+
+        report_parts.append(
+            '\nReport:\n\n=====================================================\n'
+        )
 
 
         # db size
         db_size = MySQL_DB.get_size()
+
         for line in db_size:
-            print line
-            report_parts.append(line)
+            report_parts.append(
+                'Table: {0}\nSize: {1} MB\n'.format(
+                    line['Table'], line['Size (MB)']
+                )
+            )
 
 
         durations = ['day', 'week', 'month', 'infinite']
 
         for dur in durations:
             dur_report = cls.get_report_by_duration(dur)
-            print dur_report
             report_parts.append(dur_report)
 
-        # print '\n'.join(report_parts)
+
+        report_parts.append(
+            '\n=====================================================\n'
+        )
+
+
+        print '\n'.join(report_parts)
 
         # number of articles of last 24 hours
         # number of headline_words last 24 hours
@@ -63,6 +75,8 @@ class Reports():
 
 
 
+
+
     @staticmethod
     def get_report_by_duration(duration):
 
@@ -72,7 +86,7 @@ class Reports():
         # article count
         article_count = Article.get_count_by_timestamp_period(start, end)
 
-        print '{0} articles for duration {1} to {2}'.format(article_count, start, end)
+        return '{0} articles for duration {1} to {2}'.format(article_count, start, end)
 
         # word count
         # top ten words
