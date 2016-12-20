@@ -149,6 +149,33 @@ class Article():
 
 
 
+    @staticmethod
+    def get_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
+
+        # print 'getting top {0} headline words from timestamp {1} to timestamp {2}'.format(
+        #     word_amount,
+        #     start_ts,
+        #     end_ts
+        # )
+
+        db = MySQL_DB()
+
+        with db.connection:
+
+            query = """
+                SELECT count(*) AS count FROM articles
+                WHERE scrape_ts BETWEEN {0} AND {1};
+            """.format(start_ts, end_ts, word_amount)
+
+            db.cur.execute(query)
+
+            count = db.cur.fetchone()['count']
+            # pp.pprint(records)
+
+            return count
+
+
+
     # check if article exists in db by article hash
     def record_exists_by_md5hash(self, md5hash):
 

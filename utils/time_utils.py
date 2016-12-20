@@ -4,13 +4,14 @@
 # time utility functions
 
 import time
+import datetime
 import pprint
 
 pp = pprint.PrettyPrinter(indent=4)
 
 
 
-def get_past_timestamp_by_duration(duration='day'):
+def get_past_timestamp_by_duration(duration):
 
     duration_map = {
         'day': 86400,
@@ -19,13 +20,26 @@ def get_past_timestamp_by_duration(duration='day'):
         'year': 86400 * 365
     }
 
-    return int(time.time()) - duration_map[duration]
+    if duration in duration_map:
+        return int(time.time()) - duration_map[duration]
+    else:
+        return 0
 
 
 
 def get_month_timestamp(timestamp):
 
     print 'getting beggining of month timestamp from timestamp...'
+
+
+
+def get_human_readable_from_timestamp(timestamp):
+
+    ts = int(timestamp)
+    return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
+
+
 
 
 

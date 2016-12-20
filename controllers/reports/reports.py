@@ -4,16 +4,15 @@
 # Reports Controller
 
 import pprint
-import logging
+import time
 
 from models.database.database import MySQL_DB
 from models.article.article import Article
 from models.headline_word.headline_word import HeadlineWord
 
-from utils.time import get_past_timestamp_by_duration
+from utils.time_utils import get_past_timestamp_by_duration
 
 pp = pprint.PrettyPrinter(indent=4)
-logging.basicConfig(filename='logs/reports.log', level=logging.DEBUG)
 
 
 
@@ -24,16 +23,27 @@ class Reports():
     @classmethod
     def send_weekly_report(cls):
 
-        print 'sending weekly report...'
+
+        # print 'sending weekly report...'
+
+        report_parts = []
+
 
         # db size
         db_size = MySQL_DB.get_size()
-        pp.pprint(db_size)
+        for line in db_size:
+            print line
+            report_parts.append(line)
+
 
         durations = ['day', 'week', 'month', 'infinite']
 
         for dur in durations:
-            cls.get_report_by_duration(dur)
+            dur_report = cls.get_report_by_duration(dur)
+            print dur_report
+            report_parts.append(dur_report)
+
+        # print '\n'.join(report_parts)
 
         # number of articles of last 24 hours
         # number of headline_words last 24 hours
@@ -56,7 +66,28 @@ class Reports():
     @staticmethod
     def get_report_by_duration(duration):
 
-        print 'getting report for duration {0}'.format(duration)
+        start = get_past_timestamp_by_duration(duration)
+        end = int(time.time())
+
+        # article count
+        article_count = Article.get_count_by_timestamp_period(start, end)
+
+        print '{0} articles for duration {1} to {2}'.format(article_count, start, end)
+
+        # word count
+        # top ten words
+
+        # return 'past: {0} and present: {1}'.format(past, present)
+
+
+
+
+
+
+
+
+
+
 
 
 
