@@ -83,7 +83,27 @@ class HeadlineWord():
 
 
     @staticmethod
-    def get_top_headline_words_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
+    def get_count_by_timestamp_period(start_ts, end_ts):
+
+        db = MySQL_DB()
+
+        with db.connection:
+
+            query = """
+                SELECT count(*) AS count FROM headline_words
+                WHERE scrape_ts BETWEEN {0} AND {1};
+            """.format(start_ts, end_ts)
+
+            db.cur.execute(query)
+
+            count = db.cur.fetchone()['count']
+
+        return count
+
+
+
+    @staticmethod
+    def get_top_ranked_words_by_timestamp_period(start_ts, end_ts, word_amount=10):
 
         print 'getting top {0} headline words from timestamp {1} to timestamp {2}'.format(
             word_amount,

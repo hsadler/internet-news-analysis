@@ -144,7 +144,7 @@ class Article():
 
 
     @staticmethod
-    def get_count_by_timestamp_period(start_ts, end_ts, word_amount=10):
+    def get_count_by_timestamp_period(start_ts, end_ts):
 
         db = MySQL_DB()
 
@@ -153,13 +153,13 @@ class Article():
             query = """
                 SELECT count(*) AS count FROM articles
                 WHERE scrape_ts BETWEEN {0} AND {1};
-            """.format(start_ts, end_ts, word_amount)
+            """.format(start_ts, end_ts)
 
             db.cur.execute(query)
 
             count = db.cur.fetchone()['count']
 
-            return count
+        return count
 
 
 

@@ -18,4 +18,4 @@ Reports.send_weekly_report()
 
 from models.headline_word.headline_word import HeadlineWord
 
-# HeadlineWord.get_top_headline_words_count_by_timestamp_period(1481609486, 1481609586, 20)
+# HeadlineWord.get_top_ranked_words_by_timestamp_period(1481609486, 1481609586, 20)

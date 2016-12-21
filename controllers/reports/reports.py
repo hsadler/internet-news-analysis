@@ -28,7 +28,7 @@ class Reports():
 
 
         report_parts.append(
-            '\nReport:\n\n=====================================================\n'
+            '\nReport:\n\n=====================================================\n\n'
         )
 
 
@@ -43,70 +43,57 @@ class Reports():
             )
 
 
-        durations = ['day', 'week', 'month', 'infinite']
+
+        report_parts.append(
+            '-----------------------------------------------------\n'
+        )
+
+
+        durations = ['day', 'week', 'month', 'all time']
 
         for dur in durations:
             dur_report = cls.get_report_by_duration(dur)
-            report_parts.append(dur_report)
+            report_parts.extend([dur_report, '\n'])
 
 
         report_parts.append(
-            '\n=====================================================\n'
+            '=====================================================\n'
         )
 
 
         print '\n'.join(report_parts)
-
-        # number of articles of last 24 hours
-        # number of headline_words last 24 hours
-        # top 10 headline words of last 24 hours
-
-        # number of articles of last week
-        # number of headline_words of last week
-        # top 10 headline words of last week
-
-        # number of articles of last month
-        # number of headline_words of last month
-        # top 10 headline words of last month
-
-        # total number of articles
-        # total number of headline_words
-        # top 10 headline words of all time
-
-
 
 
 
     @staticmethod
     def get_report_by_duration(duration):
 
+
         start = get_past_timestamp_by_duration(duration)
         end = int(time.time())
 
-        # article count
+
         article_count = Article.get_count_by_timestamp_period(start, end)
+        headline_word_count = HeadlineWord.get_count_by_timestamp_period(start, end)
 
-        return '{0} articles for duration {1} to {2}'.format(article_count, start, end)
-
-        # word count
-        # top ten words
-
-        # return 'past: {0} and present: {1}'.format(past, present)
-
-
+        counts = '{0}\narticle count: {1}\nheadline word count: {2}\n'.format(
+            duration.upper(),
+            article_count,
+            headline_word_count
+        )
 
 
+        ranked_headline_words = HeadlineWord.get_top_ranked_words_by_timestamp_period(start, end)
+
+        ranked = []
+
+        for ranked_word in ranked_headline_words:
+
+            ranked_word_str = '{0}: {1}'.format(ranked_word['word'], ranked_word['count'])
+            ranked.append(ranked_word_str)
 
 
-
-
-
-
-
-
-
-
-
+        return '\n'.join([counts, '\n'.join(ranked)])
 
 
 
