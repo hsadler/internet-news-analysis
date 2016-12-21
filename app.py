@@ -5,6 +5,7 @@
 
 from controllers.scrape.scrape import Scrape
 from controllers.articles.article_processor import ArticleProcessor
+from controllers.reports.reports import Reports
 
 
 
@@ -14,6 +15,12 @@ def google_news_scrape():
 
 def newsapi_scrape():
     Scrape.newsapi_scrape()
+
+
+
+# reports
+def send_report():
+    Reports.send_report()
 
 
 
