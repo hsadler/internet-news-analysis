@@ -105,12 +105,6 @@ class HeadlineWord():
     @staticmethod
     def get_top_ranked_words_by_timestamp_period(start_ts, end_ts, word_amount=10):
 
-        print 'getting top {0} headline words from timestamp {1} to timestamp {2}'.format(
-            word_amount,
-            start_ts,
-            end_ts
-        )
-
         db = MySQL_DB()
 
         with db.connection:
@@ -124,7 +118,6 @@ class HeadlineWord():
             db.cur.execute(query)
 
             records = db.cur.fetchall()
-            pp.pprint(records)
 
             return records
 

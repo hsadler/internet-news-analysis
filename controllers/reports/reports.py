@@ -9,8 +9,10 @@ import time
 from models.database.database import MySQL_DB
 from models.article.article import Article
 from models.headline_word.headline_word import HeadlineWord
+from models.email.email import Email
 
 from utils.time_utils import get_past_timestamp_by_duration
+from utils.time_utils import get_human_readable_from_timestamp
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -21,14 +23,16 @@ class Reports():
 
 
     @classmethod
-    def send_weekly_report(cls):
+    def send_report(cls):
 
 
         report_parts = []
 
 
         report_parts.append(
-            '\nReport:\n\n=====================================================\n\n'
+            '\nReport: {0}\n\n=====================================================\n\n'.format(
+                get_human_readable_from_timestamp(time.time())
+            )
         )
 
 
@@ -61,7 +65,13 @@ class Reports():
         )
 
 
-        print '\n'.join(report_parts)
+        recipient = 'harrysadlermusic@gmail.com'
+        subject = 'Internet News Analysis Report {0}'.format(
+            get_human_readable_from_timestamp(time.time())
+        )
+        body = '\n'.join(report_parts)
+
+        Email(recipient, subject, body).send()
 
 
 
