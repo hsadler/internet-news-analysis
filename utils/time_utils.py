@@ -27,9 +27,13 @@ def get_past_timestamp_by_duration(duration):
 
 
 
-def get_month_timestamp(timestamp):
+def get_month_timestamp_from_timestamp(timestamp):
 
-    print 'getting beggining of month timestamp from timestamp...'
+    dt = datetime.datetime.fromtimestamp(timestamp)
+    month_dt = datetime.datetime(year=dt.year, month=dt.month, day=1)
+    month_ts = int(time.mktime(month_dt.timetuple()))
+
+    return month_ts
 
 
 

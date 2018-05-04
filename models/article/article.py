@@ -9,6 +9,7 @@ import hashlib
 import pprint
 
 from models.database.database import MySQL_DB
+from utils.time_utils import get_month_timestamp_from_timestamp
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -36,14 +37,18 @@ class Article():
     @classmethod
     def create(cls, title, url=None, author=None, description=None, publish_ts=None):
 
+        curr_ts = int(time.time())
+        month_ts = get_month_timestamp_from_timestamp(curr_ts)
+        article_hash = hashlib.md5(title.encode('ascii', 'ignore') + str(month_ts)).hexdigest()
+
         return cls(
             title = title,
             url = url,
             author = author,
             description = description,
             publish_ts = publish_ts,
-            scrape_ts = int(time.time()),
-            md5hash = hashlib.md5(title.encode('ascii', 'ignore')).hexdigest()
+            scrape_ts = curr_ts,
+            md5hash = article_hash
         )
 
 
